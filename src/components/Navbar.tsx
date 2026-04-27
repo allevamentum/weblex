@@ -1,7 +1,61 @@
 import { useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 
-const NAV_LINKS = ["Home", "Features", "Pricing", "About"];
+const InstagramIcon = ({ size = 17 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <circle cx="12" cy="12" r="5" />
+    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+const FacebookIcon = ({ size = 17 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const NAV_LINKS = [
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Process", href: "#process" },
+  { label: "Technology", href: "#tech" },
+  { label: "Contact", href: "#contact" },
+];
+
+const TriangleMark = ({ size = 32 }: { size?: number }) => (
+  <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+    <defs>
+      <linearGradient id="navGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#4F7DF7" />
+        <stop offset="100%" stopColor="#8B6CF7" />
+      </linearGradient>
+    </defs>
+    <polygon points="50,8 92,92 8,92" fill="none" stroke="url(#navGrad)" strokeWidth="3" />
+    <polygon points="50,28 78,82 22,82" fill="none" stroke="url(#navGrad)" strokeWidth="3" />
+    <polygon points="50,44 66,74 34,74" fill="url(#navGrad)" />
+  </svg>
+);
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,20 +75,22 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 50,
-        transition: "background 0.3s ease",
-        background: scrolled ? "rgba(2, 2, 8, 0.6)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
+        transition: "background 0.3s ease, backdrop-filter 0.3s ease",
+        background: scrolled ? "rgba(17, 17, 24, 0.65)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
       }}
     >
       <nav
         style={{
-          maxWidth: "1200px",
+          maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 24px",
-          height: "68px",
+          padding: "0 28px",
+          height: "72px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: "20px",
         }}
       >
         {/* Brand */}
@@ -43,28 +99,18 @@ export default function Navbar() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "6px",
+            gap: "10px",
             textDecoration: "none",
-            color: "white",
-            fontWeight: 700,
-            fontSize: "20px",
-            letterSpacing: "-0.3px",
+            color: "#F0EDE8",
+            fontWeight: 600,
+            fontSize: "15px",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            flexShrink: 0,
           }}
         >
-          Weblex
-          <span
-            style={{
-              display: "inline-block",
-              width: "7px",
-              height: "7px",
-              borderRadius: "50%",
-              background: "hsl(73, 98%, 57%)",
-              boxShadow: "0 0 10px hsl(73, 98%, 57%), 0 0 24px hsl(73, 98%, 57% / 0.5)",
-              marginLeft: "-1px",
-              marginBottom: "2px",
-              flexShrink: 0,
-            }}
-          />
+          <TriangleMark size={28} />
+          ALLEVAMENTUM
         </a>
 
         {/* Desktop links */}
@@ -72,66 +118,122 @@ export default function Navbar() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "36px",
+            gap: "30px",
             listStyle: "none",
           }}
           className="nav-desktop-links"
         >
           {NAV_LINKS.map((link) => (
-            <li key={link}>
+            <li key={link.label}>
               <a
-                href={`#${link.toLowerCase()}`}
+                href={link.href}
                 style={{
-                  color: "rgba(255,255,255,0.7)",
+                  color: "rgba(240, 237, 232, 0.65)",
                   textDecoration: "none",
-                  fontSize: "14px",
+                  fontSize: "13.5px",
                   fontWeight: 450,
-                  letterSpacing: "0.1px",
+                  letterSpacing: "0.02em",
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  (e.target as HTMLElement).style.color = "white";
+                  (e.target as HTMLElement).style.color = "#F0EDE8";
                 }}
                 onMouseLeave={(e) => {
-                  (e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)";
+                  (e.target as HTMLElement).style.color = "rgba(240, 237, 232, 0.65)";
                 }}
               >
-                {link}
+                {link.label}
               </a>
             </li>
           ))}
         </ul>
 
-        {/* Get Started CTA */}
-        <button
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            padding: "9px 18px",
-            borderRadius: "8px",
-            border: "none",
-            background: "hsl(73, 98%, 57%)",
-            color: "hsl(240, 67%, 1%)",
-            fontSize: "13.5px",
-            fontWeight: 600,
-            cursor: "pointer",
-            transition: "opacity 0.2s, transform 0.15s",
-            letterSpacing: "-0.1px",
-          }}
-          className="nav-cta-btn"
-          onMouseEnter={(e) => {
-            (e.target as HTMLElement).style.opacity = "0.88";
-            (e.target as HTMLElement).style.transform = "scale(1.02)";
-          }}
-          onMouseLeave={(e) => {
-            (e.target as HTMLElement).style.opacity = "1";
-            (e.target as HTMLElement).style.transform = "scale(1)";
-          }}
+        {/* Right cluster: socials + CTA */}
+        <div
+          style={{ display: "flex", alignItems: "center", gap: "16px" }}
+          className="nav-right-cluster"
         >
-          Get Started
-          <ArrowUpRight size={14} />
-        </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <a
+              href="https://www.instagram.com/allevamentum/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              style={{
+                color: "rgba(240, 237, 232, 0.55)",
+                display: "inline-flex",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F0EDE8")}
+              onMouseLeave={(e) =>
+                ((e.currentTarget as HTMLElement).style.color = "rgba(240, 237, 232, 0.55)")
+              }
+            >
+              <InstagramIcon size={17} />
+            </a>
+            <a
+              href="https://www.facebook.com/allevamentum"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              style={{
+                color: "rgba(240, 237, 232, 0.55)",
+                display: "inline-flex",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F0EDE8")}
+              onMouseLeave={(e) =>
+                ((e.currentTarget as HTMLElement).style.color = "rgba(240, 237, 232, 0.55)")
+              }
+            >
+              <FacebookIcon size={17} />
+            </a>
+          </div>
+
+          <a
+            href="#contact"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px 18px",
+              borderRadius: "9999px",
+              border: "1px solid rgba(255,255,255,0.14)",
+              background: "rgba(255,255,255,0.04)",
+              color: "#F0EDE8",
+              fontSize: "13px",
+              fontWeight: 500,
+              letterSpacing: "0.02em",
+              cursor: "pointer",
+              transition: "background 0.2s, border-color 0.2s, transform 0.15s",
+              textDecoration: "none",
+            }}
+            className="nav-cta-btn"
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "rgba(79, 125, 247, 0.15)";
+              el.style.borderColor = "rgba(79, 125, 247, 0.4)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "rgba(255,255,255,0.04)";
+              el.style.borderColor = "rgba(255,255,255,0.14)";
+            }}
+          >
+            <span
+              style={{
+                display: "inline-block",
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                background:
+                  "linear-gradient(135deg, #4F7DF7 0%, #8B6CF7 100%)",
+                boxShadow: "0 0 8px rgba(79, 125, 247, 0.7)",
+              }}
+            />
+            Get in Touch
+          </a>
+        </div>
 
         {/* Hamburger */}
         <button
@@ -158,64 +260,102 @@ export default function Navbar() {
       <div
         style={{
           overflow: "hidden",
-          maxHeight: menuOpen ? "300px" : "0",
-          transition: "max-height 0.35s ease",
-          background: "rgba(2, 2, 8, 0.95)",
+          maxHeight: menuOpen ? "440px" : "0",
+          transition: "max-height 0.4s ease",
+          background: "rgba(12, 12, 18, 0.96)",
           backdropFilter: "blur(20px)",
+          borderTop: menuOpen ? "1px solid rgba(255,255,255,0.06)" : "none",
         }}
       >
         <ul
           style={{
             listStyle: "none",
-            padding: "12px 24px 20px",
+            padding: "12px 28px 24px",
             display: "flex",
             flexDirection: "column",
-            gap: "4px",
+            gap: "2px",
           }}
         >
           {NAV_LINKS.map((link) => (
-            <li key={link}>
+            <li key={link.label}>
               <a
-                href={`#${link.toLowerCase()}`}
+                href={link.href}
                 onClick={() => setMenuOpen(false)}
                 style={{
                   display: "block",
-                  padding: "12px 0",
-                  color: "rgba(255,255,255,0.8)",
+                  padding: "14px 0",
+                  color: "rgba(240, 237, 232, 0.85)",
                   textDecoration: "none",
                   fontSize: "16px",
                   fontWeight: 450,
-                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  letterSpacing: "0.01em",
+                  borderBottom: "1px solid rgba(255,255,255,0.05)",
                 }}
               >
-                {link}
+                {link.label}
               </a>
             </li>
           ))}
-          <li style={{ marginTop: "12px" }}>
-            <button
+          <li style={{ marginTop: "16px" }}>
+            <a
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
               style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
                 width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "none",
-                background: "hsl(73, 98%, 57%)",
-                color: "hsl(240, 67%, 1%)",
-                fontSize: "15px",
+                padding: "13px",
+                borderRadius: "9999px",
+                background: "linear-gradient(135deg, #4F7DF7 0%, #8B6CF7 100%)",
+                color: "#F0EDE8",
+                fontSize: "14px",
                 fontWeight: 600,
-                cursor: "pointer",
+                letterSpacing: "0.02em",
+                textDecoration: "none",
               }}
             >
-              Get Started
-            </button>
+              Get in Touch
+              <ArrowUpRight size={15} />
+            </a>
+          </li>
+          <li
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "20px",
+              marginTop: "20px",
+              paddingTop: "20px",
+              borderTop: "1px solid rgba(255,255,255,0.05)",
+            }}
+          >
+            <a
+              href="https://www.instagram.com/allevamentum/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "rgba(240, 237, 232, 0.6)" }}
+              aria-label="Instagram"
+            >
+              <InstagramIcon size={20} />
+            </a>
+            <a
+              href="https://www.facebook.com/allevamentum"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "rgba(240, 237, 232, 0.6)" }}
+              aria-label="Facebook"
+            >
+              <FacebookIcon size={20} />
+            </a>
           </li>
         </ul>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .nav-desktop-links { display: none !important; }
-          .nav-cta-btn { display: none !important; }
+          .nav-right-cluster { display: none !important; }
           .ham-btn { display: flex !important; }
         }
       `}</style>
