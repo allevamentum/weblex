@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(240, 67%, 1%);
+    color: hsl(0, 0%, 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(240, 67%, 2%);
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(73, 98%, 57%, 0.3);
+  border-radius: 9999px;
+}
+
+/* Hamburger menu */
+.ham-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: white;
+  border-radius: 9999px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+.ham-open .ham-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.ham-open .ham-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.ham-open .ham-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
